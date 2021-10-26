@@ -7,7 +7,7 @@
 #
 #  todo:
 #
-#         - FIX: syntax of all sys.sterr.write() calls, test
+#         - FIX: syntax of all sys.stderr.write() calls, test
 #         - Add detected file house keeping, delete files after x days...
 #         - Add multiple notification channels: push via BT, buzzer,... each enabled/disabled by config flag
 #         - Add push notifications via service
