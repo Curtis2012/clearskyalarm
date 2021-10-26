@@ -1,0 +1,23 @@
+
+{
+	"debug": true,
+	"starCountThreshold": 1000,
+	"distanceThreshold": 20,
+	"detectionThreshold": 0.55,
+	"templatePath": "/home/pi/clearskyalarm/templates/templateSM.jpg",
+	"imagePath": "/home/pi/allsky/images",
+	"imageTag": "image-",
+	"imageType": ".jpg",
+	"detectedPath": "/home/pi/clearskyalarm/detected",
+	"detectedTag": "detected-",
+	"writeDetectedFile": false,
+	"smsAPIKey": "APIKey",
+	"smsPhone": "123456",
+	"smsRegion": "us",
+	"smsMsg": "Clear Skies! Wake TFU!",
+	"telegramAPIKey": "APIKey",
+	"notifySMS": true,
+	"notifyTelegram": true,
+	"notifyBuzzer": false,
+	"notifyDelta": 900
+}
