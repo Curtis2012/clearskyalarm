@@ -2,8 +2,8 @@
 #  clear-sky-alarm
 #
 #  2021-09-20 C. Collins created
-#  2021-09-26 C. Collins implement watch allskycam image directory for new files
-#  2021-09-30 C. Collins moved to github
+#  2021-09-26 C. Collins implement watch allsky cam image directory for new files
+#  2021-10-25 C. Collins moved to github
 #
 #  todo:
 #

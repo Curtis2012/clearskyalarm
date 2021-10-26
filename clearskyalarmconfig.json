@@ -17,7 +17,7 @@
 	"smsMsg": "Clear Skies! Wake TFU!",
 	"telegramAPIKey": "APIKey",
 	"notifySMS": true,
-	"notifyTelegram": true,
+	"notifyTelegram": false,
 	"notifyBuzzer": false,
 	"notifyDelta": 900
 }
