@@ -16,6 +16,5 @@
 	"smsRegion": "us",
 	"smsMsg": "Clear Skies! Wake TFU!",
 	"notifySMS": true,
-	"notifyBuzzer": false,
 	"notifyDelta": 900
 }
