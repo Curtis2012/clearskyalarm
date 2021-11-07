@@ -187,14 +187,20 @@ def countStars():
 
     loc = np.where(result >= config.detectionThreshold)
 
-    numStars = 0
-    ptPrev = loc[0]  # fix to reference just first tuple
+    star_list = list()
     for pt in zip(*loc[::-1]):
-        d = math.sqrt(((pt[0] - ptPrev[0]) ** 2) + ((pt[1] - ptPrev[1]) ** 2))
-        if (d > config.distanceThreshold):
-            cv2.rectangle(img, pt, (pt[0] + config.w, pt[1] + config.h), (0, 255, 255), 1)
-            numStars += 1
-        ptPrev = pt
+        for star in star_list:
+            d = math.sqrt(((pt[0] - star[0]) ** 2) + ((pt[1] - star[1]) ** 2))
+            if (d < config.distanceThreshold):
+                # Overlap found, do not add
+                break
+        else:
+            star_list.append(pt)
+
+
+    for star in star_list:
+        cv2.rectangle(img, pt, (star[0] + config.w, star[1] + config.h), (0, 255, 255), 1)
+
 
     try:
         if (config.writeDetectedFile):
@@ -208,11 +214,11 @@ def countStars():
     except:
         sys.stderr.write("Error accessing detected file/file path\n")  # non-critical error so do not return a fail on deteced file write
 
-    print("star count =", numStars)
+    print("star count =", len(star_list))
     elapsedTime = time.time() - startTime
     print("Star count elapsed time = ", elapsedTime, " seconds")
 
-    if (numStars > config.starCountThreshold):
+    if (len(star_list) > config.starCountThreshold):
         try:
             notify()
         except:
