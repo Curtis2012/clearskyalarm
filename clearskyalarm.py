@@ -7,7 +7,6 @@
 #
 #  todo:
 #
-#         - FIX: syntax of all sys.stderr.write() calls, test
 #         - Add detected file house keeping, delete files after x days...
 #         - Add multiple notification channels: push via BT, buzzer,... each enabled/disabled by config flag
 #         - Add push notifications via service
@@ -197,22 +196,23 @@ def countStars():
         else:
             star_list.append(pt)
 
+    if (config.writeDetectedFile):
+        wOffset = int(config.w/2)
+        hOffset = int(config.h/2)
 
-    for star in star_list:
-        cv2.rectangle(img, star, (star[0] + config.w, star[1] + config.h), (0, 255, 255), 1)
+        for star in star_list:
+            cv2.circle(img, (star[0] + wOffset, star[1] + hOffset), 10, (0, 255, 255), 1)
 
-
-    try:
-        if (config.writeDetectedFile):
-            os.chdir(config.detectedPath)
-            if (cv2.imwrite(config.detectedFile, img, params=None)):
-                if (config.debug):
-                    print("Detected file written: ", config.detectedFile)
-            else:
-                sys.stderr.write(
-                    "Error writing detected image\n")  # non-critical error so do not return a fail on deteced file write
-    except:
-        sys.stderr.write("Error accessing detected file/file path\n")  # non-critical error so do not return a fail on deteced file write
+        try:
+                os.chdir(config.detectedPath)
+                if (cv2.imwrite(config.detectedFile, img, params=None)):
+                    if (config.debug):
+                        print("Detected file written: ", config.detectedFile)
+                else:
+                    sys.stderr.write(
+                        "Error writing detected image\n")  # non-critical error so do not return a fail on deteced file write
+        except:
+            sys.stderr.write("Error accessing detected file/file path\n")  # non-critical error so do not return a fail on deteced file write
 
     print("star count =", len(star_list))
     elapsedTime = time.time() - startTime
