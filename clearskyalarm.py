@@ -199,7 +199,7 @@ def countStars():
 
 
     for star in star_list:
-        cv2.rectangle(img, pt, (star[0] + config.w, star[1] + config.h), (0, 255, 255), 1)
+        cv2.rectangle(img, star, (star[0] + config.w, star[1] + config.h), (0, 255, 255), 1)
 
 
     try:
