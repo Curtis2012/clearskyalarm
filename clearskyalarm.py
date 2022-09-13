@@ -68,6 +68,7 @@ class ConfigClass:
                 self.notifyDelta = self.configFile['notifyDelta']
                 self.imageTag = self.configFile['imageTag']
                 self.imageType = self.configFile['imageType']
+                self.ignoreFileTimeDelta = self.configFile['ignoreFileTimeDelta']
 
                 self.notifyTimeStamp = time.time()
                 self.buildNotifyPayload()
@@ -83,10 +84,11 @@ class ConfigClass:
             return (False)
 
         print("Clear-sky-alarm, configuration file loaded...")
+        f.close()
         return (True)
 
 
-config = ConfigClass()
+config = ConfigClass()signal.signal(signal.SIGTERM, sigterm_handler)
 
 
 def allskyFile():
@@ -100,6 +102,17 @@ def allskyFile():
 
 
 class HandleNotifyClass(pyinotify.ProcessEvent):
+
+    def oldNotification(self, filePath):
+        notifyTime = os.path.getmtime(filePath)
+        currentTime = time.time()
+        timeDelta = currentTime - notifyTime
+
+        if (timeDelta > config.ignoreFileTimeDelta):
+            return(True)
+        else:
+            return(False)
+
     def process_IN_CREATE(self, event):
         global imageFile
 
@@ -110,8 +123,12 @@ class HandleNotifyClass(pyinotify.ProcessEvent):
         if (allskyFile()):
             try:
                 time.sleep(5)  # kludge: delay after create until I come up with a better way to detect file ready
-                if (not countStars()):
-                    sys.stderr.write("Star count failed\n")
+                if (self.oldNotification(imageFile)):
+                    print("Ignoring old file notification")
+                    return(True)
+                else:
+                    if (not countStars()):
+                        sys.stderr.write("Star count failed\n")
             except:
                 sys.stderr.write("Error performing star count\n")
         else:
@@ -228,6 +245,7 @@ def countStars():
 
 
 def main():
+
     config.loadConfig()
 
     print("Creating watch for new files on ", config.imagePath)

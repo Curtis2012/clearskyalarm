@@ -16,5 +16,6 @@
 	"smsRegion": "us",
 	"smsMsg": "Clear Skies! Wake TFU!",
 	"notifySMS": true,
-	"notifyDelta": 900
+	"notifyDelta": 900,
+	"ignoreFileTimeDelta": 60000
 }
